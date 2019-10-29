@@ -50,7 +50,7 @@ export default {
       cookiePass: '',
       loginForm: {
         username: 'admin',
-        password: '123456',
+        password: '123',
         rememberMe: false,
         code: '',
         uuid: ''
