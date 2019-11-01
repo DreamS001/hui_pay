@@ -1,78 +1,55 @@
 <template>
   <div class="wscn-http404-container">
-    <div class="papel-box">
-      <div class="nav-a">
-        <div class="block" style="width:100%;">
-          <span class="demonstration">交易时间：</span>
-          <el-date-picker v-model="value6" type="daterange" size="mini" range-separator="至" :start-placeholder="time" :end-placeholder="times"></el-date-picker>
-          <el-button class="demonstration" type="primary" style="margin-left:20px">今天</el-button>
-          <el-button class="demonstration" type="primary" style="margin-left:20px">近三天</el-button>
-          <el-button class="demonstration" type="primary" style="margin-left:20px">近一周</el-button>
-          <hr/>
-          <span class="demonstration" style="">角色选择：</span>
-          <el-select v-model="role1" multiple placeholder="请选择" style="width:220px;">
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-          </el-select>
-          <el-select v-model="role2" multiple placeholder="请选择" style="width:220px;">
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-          </el-select>
-          <el-select v-model="role3" multiple placeholder="请选择" style="width:220px;">
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-          </el-select>
-          <el-select v-model="role4" multiple placeholder="请选择" style="width:220px;">
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-          </el-select>
-          <span class="time" style="margin-left:20px" @click=" queryDate">查询</span>
-          <span class="time" style="background:#fff;border: 1px solid #DCDFE6;color: #606266;">清空</span>
-          <!-- <button @click="btt">点击</button> -->
-        </div>
+    <div class="nav-a">
+      <div class="block">
+        <span class="demonstration">自定义查询：</span>
+        <el-date-picker
+          v-model="value6"
+          type="daterange"
+          size="mini"
+          range-separator="至"
+          :start-placeholder="time"
+          :end-placeholder="times"
+        ></el-date-picker>
+
+        <span class="demonstration" style="margin-left:20px">流水号：</span>
+        <input
+          style="width:200px;height:28px;border:1px solid #DCDFE6"
+          type="text"
+          v-model="merchant"
+        />
+        <span class="time" style="margin-left:100px" @click=" queryDate">查询</span>
+        <span class="time" style="background:#09BD22" @click="download">导出</span>
+        <!-- <button @click="btt">点击</button> -->
       </div>
-      <div style="width:100%!important;" class="table-box">
-        <el-table :data="list" style="width: 100%!important" stripe :header-cell-class-name="handlemyclass">
-          <el-table-column :cell-class-name="colorblueclass" prop="merchant_order_id" label="订单内部流水号"></el-table-column>
-          <el-table-column prop="qcf_device_num" label="流水来源" v-model="uname"></el-table-column>
-          <el-table-column prop="complete_time" label="订单金额"></el-table-column>
-          <el-table-column prop="order_amount" label="官方手续费"></el-table-column>
-          <el-table-column prop="order_status" label="服务商分润"></el-table-column>
-          <el-table-column prop="loc_info" label="净收入"></el-table-column>
-          <el-table-column prop="loc_info" label="所属门店"></el-table-column>
-          <el-table-column prop="loc_info" label="所属商户"></el-table-column>
-          <el-table-column prop="loc_info" label="所属代理商"></el-table-column>
-          <el-table-column prop="loc_info" label="下单时间"></el-table-column>
-          <el-table-column prop="loc_info" label="订单类型"></el-table-column>
-          <el-table-column prop="order_status" label="状态">
-            <template slot-scope="scope">{{scope.row.order_status|formatrStatus}}</template>
-          </el-table-column>
-          <el-table-column prop="loc_info" label="操作"></el-table-column>
-        </el-table>
-      </div>
-      <div class="block" style="margin-top:10px;">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="pageNo"
-          :page-sizes="[10,20, 30, 40]"
-          :page-size="pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-        ></el-pagination>
-      </div>
+    </div>
+    <div style="width:100%!important;margin:20px">
+      <el-table
+        :data="list"
+        style="width: 100%!important"
+        stripe
+        :header-cell-class-name="handlemyclass"
+      >
+        <el-table-column :cell-class-name="colorblueclass" prop="merchant_order_id" label="流水号" width="350px"></el-table-column>
+				<el-table-column prop="qcf_device_num" label="设备号" v-model="uname"></el-table-column>
+        <el-table-column prop="complete_time" label="交易时间"></el-table-column>
+        <el-table-column prop="order_amount" label="交易金额（美金）"></el-table-column>
+        <el-table-column prop="order_status" label="交易状态">
+					<template slot-scope="scope">{{scope.row.order_status|formatrStatus}}</template>
+				</el-table-column>
+        <el-table-column prop="loc_info" label="备注"></el-table-column>
+      </el-table>
+    </div>
+    <div class="block" style="margin-bottom:50px;padding-bottom:20px">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pageNo"
+        :page-sizes="[10,20, 30, 40]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      ></el-pagination>
     </div>
   </div>
 </template>
@@ -95,11 +72,7 @@ export default {
       times: "",
       allList:[],
       pageSize1:2147483647,
-      uname:"",
-      role1:'',
-      role2:'',
-      role3:'',
-      role4:'',
+      uname:""
     };
   },
 	  filters: {
@@ -253,22 +226,10 @@ export default {
 
 <style  rel="stylesheet/scss" lang="scss" >
 .test {
-  color: #909399 !important;
-  background: #fff !important;
+  color: #fff !important;
+  background: #4986ff !important;
   font-weight: 100;
   width: 100% !important;
-}
-.papel-box{
-  border-radius: 2px;
-  background-color: #fff;
-  box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
-  padding: 10px 15px;
-  box-sizing: border-box;
-}
-.table-box{
-  border-radius: 2px;
-  background-color: #fff;
-  box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
 }
 </style>
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -276,24 +237,14 @@ export default {
   background: #f0f2f5;
   min-height: calc(100vh - 84px);
   width: 100%;
-  padding: 15px;
-  box-sizing: border-box;
 }
 .nav-a {
   width: 100%;
-  // height: 70px;
+  height: 70px;
   background: #fff;
   display: flex;
   align-items: center;
-  // margin-left: 20px;
-  padding: 10px 0;
-  box-sizing: border-box;
-  hr{
-    border-color: transparent;
-  }
-  .demonstration{
-
-  }
+  margin-left: 20px;
   input {
     width: 350px;
     height: 28px;
@@ -302,6 +253,7 @@ export default {
 }
 .block {
   font-size: 13px;
+  margin-left: 30px;
 }
 .time {
   width: 60px;
@@ -317,12 +269,5 @@ export default {
 
 .blue {
   color: #2cc23c !important;
-}
-</style>
-
-<style>
-.el-button{
-  padding:8px 20px !important;
-  box-sizing: border-box;
 }
 </style>
