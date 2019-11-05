@@ -1,0 +1,255 @@
+<template>
+  <!-- 间连商户页面 -->
+  <div class="wscn-http404-container">
+    <div>
+      <div class="system-right">
+        <div class="right-main-box">
+          <div class="right-main right-main1" >
+            <div class="nav">
+              <div class="block" style="margin-bottom:20px;min-width:600px">
+                <div>
+                <template>
+                  <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+                    <!-- 本地存储 -->
+                    <el-tab-pane label="本地存储" name="first">
+                      <div class="left-line-content">
+
+                      </div>
+                    </el-tab-pane>
+                    <!-- 七牛云存储 -->
+                    <el-tab-pane label="七牛云存储" name="second">
+                      <el-card class="box-card">
+                        <div slot="header" class="clearfix">
+                          <span>七牛云存储配置</span>
+                          <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+                        </div>
+                        <div class="text item">
+                        </div>
+                      </el-card>
+                    </el-tab-pane>
+                    <!-- 腾讯云存储 -->
+                    <el-tab-pane label="腾讯云存储" name="third">
+                      <el-card class="box-card">
+                        <div slot="header" class="clearfix">
+                          <span>腾讯云存储配置</span>
+                          <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+                        </div>
+                        <div class="text item">
+
+                        </div>
+                      </el-card>
+                      <el-button class="item_left" type="primary" @click="onSubmit">保存</el-button>
+                    </el-tab-pane>
+                    <!-- 阿里云存储配置 -->
+                    <el-tab-pane label="阿里云存储" name="fourth">
+                      <el-card class="box-card">
+                        <div slot="header" class="clearfix">
+                          <span>阿里云存储配置</span>
+                          <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+                        </div>
+                        <div class="text item">
+
+                        </div>
+                      </el-card>
+                      <el-button class="item_left" type="primary" @click="onSubmit">保存</el-button>
+
+                    </el-tab-pane>
+                  </el-tabs>
+                </template>
+                  <div class="block-d1">
+                    <el-badge :value="3" class="item">
+                      <el-button size="small">通过</el-button>
+                    </el-badge>
+                    <el-badge :value="3" class="item">
+                      <el-button size="small">驳回</el-button>
+                    </el-badge>
+                    <el-badge :value="1" class="item" type="primary">
+                      <el-button size="small">人工审核</el-button>
+                    </el-badge>
+                    <el-badge :value="2" class="item" type="warning">
+                      <el-button size="small">商户未提交</el-button>
+                    </el-badge>
+                  </div>
+                  <div style="height:15px"></div>
+                  <div class="roles">
+                    <div class="block-d">
+                      <!-- <span class="demonstration">加入的时间：</span> -->
+                      <el-date-picker v-model="value" :start-placeholder="beginDatePlaceHolder" :end-placeholder="endDatePlaceHolder" type="daterange" size="mini" range-separator="至" />
+                      <el-input v-model="input" placeholder="请输入商户名称"></el-input>
+                    <el-button type="primary">查询</el-button>
+                    </div>
+
+                    <!-- <span class="time" style="margin-left:10px" >查询</span>
+                    <span class="time" style="background:#09BD22" >清空</span> -->
+                  </div>
+                </div>
+                <div class="zlist">
+                  <el-table :data="list" style="width: 100%!important;padding:5px 0;box-sizing: border-box;" stripe :header-cell-class-name="handlemyclass">
+                    <el-table-column prop="product_name" label="商户名称" align="center" min-width="100"></el-table-column>
+                    <el-table-column prop="product_name" label="经营类目" align="center" min-width="100"></el-table-column>
+                    <el-table-column prop="product_name" label="联系人" align="center" min-width="100"></el-table-column>
+                    <el-table-column prop="product_name" label="联系人电话" align="center" min-width="100"></el-table-column>
+                    <el-table-column prop="product_name" label="进件时间" align="center" min-width="100"></el-table-column>
+                    <el-table-column prop="product_name" label="商户状态" align="center" min-width="100"></el-table-column>
+                    <el-table-column label="操作" align="center" min-width="200">
+                      <template slot-scope="scope">
+                        <!-- details -->
+                        <span class="s-btn" @click="edited(scope.$index,scope.row)">详情</span>
+                        <!-- <span class="s-btn" @click="edit(scope.$index,scope.row)">费率修改</span> -->
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                  <!-- 分页器 -->
+                  <div class="block" style="padding-left:5px;box-sizing: border-box;">
+                    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total" ></el-pagination>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { finan} from "@/api/finance"
+import moment from "moment";
+import {formatDate} from '../../utils/date.js'
+
+export default {
+  data() {
+    return {
+      input:'',
+      value: "",
+      input1: "",
+      pageNo: 1,
+      pageSize: 10,
+      time: "",
+      times: "",
+      total: 1,
+      currentPage4: 4,
+      list: [],
+      allList: [],
+      clickQueryDate: false,
+      pageSize1: 2147483647,
+      beginDatePlaceHolder: '',
+      endDatePlaceHolder: '',
+      beginDate: '',
+      endDate: '',
+      value: ''
+    };
+  },
+  created() {
+        var date = new Date()
+        this.beginDatePlaceHolder = formatDate(date, 'yyyy-MM-dd')
+        this.endDatePlaceHolder = formatDate(date, 'yyyy-MM-dd')
+        this.beginDate = ''
+        this.endDate = ''
+
+  },
+  methods:{
+    handlemyclass: function(row, column, rowIndex, columnIndex) {
+      return "test";
+    },
+  }
+}
+</script>
+
+<style rel="stylesheet/scss" lang="scss" scoped>
+.wscn-http404-container {
+  background: #f0f2f5;
+  min-height: calc(100vh - 84px);
+  width: 100%;
+  background-color: #f0f2f5;
+  background-size: cover;
+}
+.wscn-http404-container>div{
+  width:100%;
+  min-width:650px;
+}
+// 系统设置的主体右边主体内容
+.system-right{
+  width: 100%;
+  min-width: 500px;
+  float: right;
+  min-height: 100%;
+  box-sizing: border-box;
+  padding:0px;
+  margin:0px;
+}
+.right-main-box{
+  padding:15px;
+  width:100%;
+  box-sizing: border-box;
+}
+.right-main{
+  width:100%;
+  box-sizing: border-box;
+  padding:20px;
+  background: #fff;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+}
+.nav {
+  width: 100%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  font: 14px Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;
+}
+.block{
+  width: 100%;
+}
+
+</style>
+<style>
+.block-d1 .item {
+  margin-top: 10px;
+  margin-right: 40px;
+}
+  .block-d .el-range-editor--mini.el-input__inner{
+    height:30px;
+  }
+  .block-d .el-range-editor.el-input__inner{
+    padding:0 10px;
+  }
+  .block-d .el-range-separator{
+    padding:5px;
+  }
+ .roles  .el-input__inner{
+   height:30px;
+   /* width:150px !important; */
+  }
+  .roles .el-input{
+    width:200px !important;
+  }
+ .roles .el-input__icon{
+   line-height: 30px;
+  }
+  .roles .el-button--primary{
+    height: 30px;
+    padding:7px 15px;
+  }
+  .roles .el-button--primary.is-plain{
+    color:black;
+    background-color: #fff;
+    border-color: #DCDFE6;
+  }
+  .roles .button2:hover{
+    color: #409EFF;
+    border-color: #c6e2ff;
+    background-color: #ecf5ff;
+  }
+  .zlist .el-table thead{
+    color: #909399;
+    font-weight: 500;
+  }
+  .zlist .test {
+  color: #909399 !important;
+  background: rgb(248, 248, 248) !important;
+  font-weight: 100;
+  width: 100% !important;
+  font-weight: 500;
+}
+</style>
