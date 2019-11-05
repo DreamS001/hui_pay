@@ -1,424 +1,476 @@
 <template>
+<!--  网站管理/行业资讯 -->
   <div class="wscn-http404-container">
-    <div class="nav-a">
-      <div class="block" style="width:1000px;min-width:800px">
-        <span class="demonstration">设备号：</span>
-        <input type="text" v-model="device" />
+    <div>
+      <div class="right-main right-main7" >
+        <div class="top-tabs">
+          <el-card class="box-card">
+            <div slot="header" class="clearfix">
+              <span>新闻中心</span>
+            </div>
+            <div class="text item">
+              <el-button type="primary" @click="drawer = true">添加新闻</el-button>
+              <div class="" style="padding-top: 20px;">
+                <el-table :data="tableData" style="width: 100%">
+                  <el-table-column prop="crudName" label="新闻名称" align="center"></el-table-column>
+                  <el-table-column prop="crudCode" label="新闻简介" align="center"></el-table-column>
+                  <el-table-column prop="domainClass" label="新闻图片" align="center"></el-table-column>
+                  <el-table-column prop="createTime" label="添加时间" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ parseTime(scope.row.createTime) }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="createTime" label="新闻内容" align="center">
+                    <template slot-scope="scope">
+                      <span>{{ parseTime(scope.row.createTime) }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="操作" align="center">
+                    <template slot-scope="scope">
+                      <el-button class="s-btn" type="primary" @click="edited(scope.row.crudId)">编辑</el-button>
+                      <el-button class="s-btn" type="danger" @click="deled(scope.row.crudId)">删除</el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageNumber" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total"></el-pagination>
+              </div>
 
-        <span class="demonstration">商家：</span>
-        <input type="text" v-model="merchant" />
-        <span class="time" style="margin-left:100px" @click="queryDate">查询</span>
-        <span class="time" style="background:#09BD22" @click="download">导出</span>
-      </div>
-      <div style="margin-left: 50px">
-        <el-upload
-          class="upload-demo"
-          ref="upload"
-          action="http://shipz.jie360.com.cn/api/device/import"
-          :on-success="handleSuccess"
-          :on-error="handleError"
-          :before-upload="beforeUpload"
-          :headers="headers"
-          :show-file-list="false"
-          :accept="accept"
-        >
-          <el-button size="mini" type="primary">批量导入</el-button>
-        </el-upload>
-      </div>
-    </div>
-    <div style="width:100%!important;margin:20px">
-      <el-table
-        :data="list"
-        style="width: 100%!important"
-        stripe
-        :header-cell-class-name="handlemyclass"
-      >
-        <el-table-column
-          :cell-class-name="colorblueclass"
-          prop="create_time"
-          label="添加时间"
-          :formatter="dateFormat"
-        ></el-table-column>
-        <el-table-column prop="appid_token" label="设备号"></el-table-column>
-        <el-table-column prop="loc_info" label="位置信息"></el-table-column>
-        <el-table-column prop="shop_code" label="商家"></el-table-column>
-        <el-table-column prop="enabled" label="是否激活">
-          <template slot-scope="scope">
-            <el-tag type="success" v-if="scope.row.enabled==1">激活</el-tag>
-            <el-tag type="danger" v-else="scope.row.enabled==0">停用</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column prop="operation" label="操作">
-          <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">交易记录</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
-    <div class="block" style="margin-bottom:50px;padding-bottom:20px">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="pageNo"
-        :page-sizes="[10, 20, 30, 40]"
-        :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-      ></el-pagination>
-      <!-- 浮层 -->
-    </div>
-    <div v-if="FC" class="fuCeng">
-      <div>
-        <h4>
-          <span>详情</span>
-          <img @click="contribute" src="../../assets/logo/cuo.png" alt />
-        </h4>
-        <div>
-          <el-table
-            :data="lielist"
-            style="width: 100%!important"
-            stripe
-            height="400"
-            :header-cell-class-name="handlemyclass"
-          >
-            <!-- <el-table-column prop="user_id" label="ID"></el-table-column> -->
-            <el-table-column prop="complete_time" label="日期"></el-table-column>
-            <el-table-column prop="qcf_device_num" label="设备号"></el-table-column>
-            <el-table-column prop="loc_info" label="所属商家"></el-table-column>
-          </el-table>
+            </div>
+          </el-card>
         </div>
       </div>
     </div>
+    
+    <el-drawer title="添加案例" :visible.sync="drawer" :direction="direction" :before-close="handleClose" ref="drawer">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" style="width:80%;padding-left: 60px;box-sizing: border-box;" class="demo-ruleForm">
+        <el-form-item label="新闻标题" prop="name">
+          <el-input v-model="ruleForm.name" style="width:50%;"></el-input>
+          <div style="font-size:14px;color: rgb(192, 196, 204);">标题长度建议不要超过15字</div>
+        </el-form-item>
+        <el-form-item label="新闻作者" prop="name">
+          <el-input v-model="ruleForm.name" style="width:50%;"></el-input>
+        </el-form-item>
+        <el-form-item label="图片" prop="desc">
+          <el-button type="primary">选择图片<i class="el-icon-upload el-icon--right"></i></el-button>
+          <div style="font-size:14px;color: rgb(192, 196, 204);">建议尺寸628*343px</div>
+        </el-form-item>
+        <el-form-item label="新闻简介" prop="name">
+          <el-input v-model="ruleForm.name" type="textarea" style="width:50%;"></el-input>
+        </el-form-item>
+        <el-form-item label="新闻内容" prop="name">
+          <!-- <UM :defaultMsg="defaultMsg" :config="config" ref="um"></UM> -->
+          <vue-ueditor-wrap v-model="msg" :config="config"></vue-ueditor-wrap>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">立即提交</el-button>
+        </el-form-item>
+      </el-form>
+    </el-drawer>
   </div>
 </template>
+
 <script>
-import { all, allpar, output ,allQuery} from "@/api/facility";
-import { getToken } from "@/utils/auth";
-import { formatDate } from "../../utils/date.js";
-import $ from "jquery";
-import moment from "moment";
+import {finan, finana, pages,cashlist, withdraw,topup,toup} from "@/api/finance"
+import UM from '@/components/editor/editor.vue';
+import VueUeditorWrap from 'vue-ueditor-wrap' // ES6 Module
 export default {
+
   data() {
     return {
-      pageNo: 1,
+      listoption:['Banner管理','网站消息'],
+      ind:0,
+      tableData: [],
+      pageNumber: 1,
       pageSize: 10,
+      currentPage: 1,
       total: 1,
-      merchant: "",
-      device: "",
-      list: [],
-      FC: false,
-      lielist: [],
-      headers: {
-        Authorization: "Bearer " + getToken(),
-        "Access-Control-Allow-Origin": "localhost:8000"
+      drawer: false,
+      direction:'ttb',
+      ruleForm: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
       },
-      accept:".xls,.xlsx",
-      allList: [],
-      pageSize1: 2147483647,
-      clickQueryDate:false,
-      id:""
-    };
-  },
-  methods: {
-    refresh() {
-      all(this.pageNo, this.pageSize).then(res => {
-        console.log(res);
-        this.list = eval(res.list);
-  console.log(this.list);
-  
-        this.total = res.total;
-        // alert(this.total)
-      });
-    },
-    
-    queryDate() {
-
-      this.pageNo=1
-      this.clickQueryDate = true;
-       console.log(this.device);
-      if(this.merchant){
-  allQuery(this.pageNo, this.pageSize,this.device,this.merchant).then(res => {
-        this.list = eval(res.list);
-   
-    
-        this.total = res.total;
+      smsConfig:{
+        keyid:'',
+        name:'',
+      },
+      
+      
+      rules: {
+        name: [
+          { required: true, message: '请输入活动名称', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        region: [
+          { required: true, message: '请选择活动区域', trigger: 'change' }
+        ],
+        date1: [
+          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+        ],
+        date2: [
+          { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+        ],
+        type: [
+          { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
+        ],
+        resource: [
+          { required: true, message: '请选择活动资源', trigger: 'change' }
+        ],
+        desc: [
+          { required: true, message: '请填写活动形式', trigger: 'blur' }
+        ]
+      },
+      // defaultMsg:'<span style="orphans: 2; widows: 2; font-size: 22px; font-family: KaiTi_GB2312; "><strong>夏钧姗：成功的投资需具备哪些心态和掌握哪些重要止损位</strong></span>',
+      config: {
+        initialFrameWidth: null,
+        initialFrameHeight: 350,
+        serverUrl: 'http://localhost:8013/ueditor/ueditorConfig',
         
-      });
-      allQuery(this.pageNo, this.pageSize1,this.device,this.merchant).then(
-        res => {
-          this.allList = eval(res.list);
-          this.total = res.total;
-          // this.merchant=""
-        }
-      );
-      }else{
-         allQuery(this.pageNo, this.pageSize,this.device,this.merchant).then(res => {
-        this.list = eval(res.list);
-   
-    
-        this.total = res.total;
-      });
-      allQuery(this.pageNo, this.pageSize1,this.device,this.merchant).then(
-        res => {
-          this.allList = eval(res.list);
-          this.total = res.total;
-        }
-      );
-      }
-    
+      },
+      msg:'<h2><img src="http://img.baidu.com/hi/jx2/j_0003.gif"/>Vue + UEditor + v-model双向绑定</h2>'
+    }
+  },
 
-
+  components:{
+    UM,
+    VueUeditorWrap
+  },
+  methods:{
+    changeBgc: function (index) {
+      this.ind = index
     },
-    getDate() {
-      allQuery(this.pageNo, this.pageSize1,this.device,this.merchant).then(res => {
-        console.log(res);
-        this.allList = eval(res.list);
-
-        this.total = res.total;
-          let date = JSON.parse(JSON.stringify(this.allList));
-      date.forEach((v, i) => {
-        date[i].enabled = date[i].enabled === 1 ? "激活" : "未激活";
-        date[i].create_time = moment(date[i].create_time).format("YYYY-MM-DD");
-      });
-
-      require.ensure([], () => {
-        const { export_json_to_excel } = require("@/utils/Export2Excel.js"); //引入文件
-        const tHeader = ["添加时间", "设备号", "位置信息","商家", "是否激活"]; //将对应的属性名转换成中文
-        // const tHeader = [];
-        const filterVal = ["create_time", "appid_token", "loc_info","shop_code", "enabled"]; //table表格中对应的属性名
-        const list = date; //想要导出的数据
-        const data = this.formatJson(filterVal, list);
-        export_json_to_excel(tHeader, data, "统计excel");
-      });
-      });
-    },
-    
-    dateFormat(row, column) {
-      var date = new Date(row.create_time);
-      return formatDate(date, "yyyy-MM-dd hh:mm:ss");
-    },
-    handlemyclass: function(row, column, rowIndex, columnIndex) {
-      // console.log(row, column, rowIndex, columnIndex);
-      return "test";
-    },
-    colorblueclass: function(row, column, rowIndex, columnIndex) {
-      console.log(columnIndex);
-      if (columnIndex == 2) {
-        return "blue";
-      }
-    },
-    // 导出
-    download() {
-       this.getDate();
-     
-    
-    },
-
-    // download () {
-    //           let that = this;
-    //           $.ajax({
-    //               url:'http://localhost:8000/api/device/output', //后台下载信息的请求链接
-    //               type: "GET",
-    //               responseType: 'arraybuffer',
-    // 						headers:that.headers,
-    //               success: function(response){ //response为后台返回的流数据信息
-    //                   var blob = new Blob([response], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'});
-    // 								var downloadElement = document.createElement('a');
-    // 								var href = window.URL.createObjectURL(blob); // 创建下载的链接
-    // 								downloadElement.href = href;
-    // 								downloadElement.download = '111.xlsx'; // 下载后文件名
-    // 								document.body.appendChild(downloadElement);
-    // 								downloadElement.click(); // 点击下载
-    // 								window.URL.revokeObjectURL(href); // 释放掉blob对象
-    //               },
-    //               error: function(data) {
-    //                   alert("下载失敗"+data);
-    //               }
-    //           });
-    // },
-    // 数据转换函数
-    formatJson(filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => v[j]));
-    },
-    //批量导入成功回调
-    handleSuccess(res) {
-      this.$message({
-        message: "导入成功!" + res.result + "," + res.add + "," + res.update,
-        type: "success"
-      });
-      this.refresh();
-    },
-    //批量导入失败回调
-    handleError() {
-      this.$message("导入失败!");
-    },
-    //上传前校验文件类型，防止后台抛异常
-    beforeUpload(file) {
-      var filename = file.name;
-      var fix = filename.substring(filename.indexOf("."));
-      if (".xls" == fix || ".xlsx" == fix) {
-        return true;
-      } else {
-        this.$message({
-          message: "文件类型错误,请重新选择文件再次上传!",
-          type: "error"
-        });
-      }
-      return false;
+    onSubmit() {
+      this.drawer=false
+      console.log(this.msg)
+        // console.log('submit!');
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
-      this.pageSize = val;
-      // alert(this.pageSize)
-      this.refresh();
+      this.pageSize=val;
+      this.sqlList();
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
-      this.pageNo = val;
-    if(this.clickQueryDate == false){
-        this.refresh();
-    }else{
-      allQuery(this.pageNo, this.pageSize,this.device,this.merchant).then(res => {
-        this.list = eval(res.list);
-   
-    
-        this.total = res.total;
-    })
-      // alert(this.pageNo)
-    }
+      this.pageNumber=val;
+      this.sqlList();
     },
-    // 关闭浮层
-    contribute() {
-      this.FC = false;
+    handleClose(done) {
+      done();
+      // this.$confirm('确认关闭？')
+      //   .then(_ => {
+      //     done();
+      //     console.log('关闭抽屉')
+      //   })
+      //   .catch(_ => {});
     },
-    // 查看
-    handleEdit($index, row) {
-      // alert(row);
-      this.FC = true;
-      console.log(row.appid_token);
-      allpar(row.appid_token).then(res => {
-        console.log(res);
-        console.log(21);
-        this.lielist = eval(res.list);
-      });
+    submitForm(done) {
+      done();
+    },
+    resetForm(done) {
+      done();
+    },
+    onCopy() {
+      this.$message.success("复制成功！")
+    },
+    onError() {
+      this.$message.success("复制失败！")
+    },
+     handleClick(tab, event) {
+        console.log(tab, event);
+    },
+    // 折叠面板
+    handleChange(val) {
+      console.log(val);
     }
   },
-
-  created() {
-    this.refresh();
-   
-  }
-};
-</script>
-<style  rel="stylesheet/scss" lang="scss" >
-.test {
-  color: #fff !important;
-  background: #4986ff !important;
-  font-weight: 100;
-  width: 100% !important;
 }
-</style>
+</script>
+
 <style rel="stylesheet/scss" lang="scss" scoped>
 .wscn-http404-container {
   background: #f0f2f5;
   min-height: calc(100vh - 84px);
   width: 100%;
+  background-color: #f0f2f5;
+  background-size: cover;
 }
-.nav-a {
-  width: 100%;
-  height: 70px;
+.wscn-http404-container>div{
+  width:100%;
+  min-width:650px;
+}
+// 系统设置的主体左边侧边
+.system-left{
+  display: inline-block;
+  width:120px;
+  height:100%;
+  min-height: calc(100vh - 84px);
   background: #fff;
-  display: flex;
-  align-items: center;
-  margin-left: 20px;
-  input {
-    width: 350px;
-    height: 28px;
-    border: 1px solid #dcdfe6;
-  }
+  border-right: solid 1px #e6e6e6;
 }
-.block {
-  font-size: 13px;
-  margin-left: 30px;
-  input {
-    width: 200px;
-    height: 28px;
-    border: 1px solid #dcdfe6;
-  }
+.left-title>h3{
+  margin: 20px 0px;
+  padding: 0;
+  line-height: 24px;
+  font: 14px Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;
+  color: #666;
+  text-align: center;
+  font-weight: 700;
 }
-.time {
-  width: 60px;
-  height: 30px;
-  background: #4986ff;
-  font-size: 12px;
-  padding: 8px 20px;
-  color: #f0f2f5;
-  margin: 0 20px;
+.left-main ul{
+  margin: 0;
+  padding-left: 0px;
+}
+.left-main ul li{
+  list-style-type: none;
+  font-size: 14px;
+  color: #303133;
+  padding: 0 20px;
   cursor: pointer;
+  transition: border-color .3s,background-color .3s,color .3s;
+  box-sizing: border-box;
+  height: 56px;
+  line-height: 56px;
+  white-space: nowrap;
+
+}
+.left-main ul li>span{
+  width:100%;
+  font-size: 14px;
+  color: #303133;
+  display: inline-block;
+  text-align: center;
+}
+.left-main ul .is-active >span{
+  color: #409EFF;
+}
+// 系统设置的主体右边主体内容
+.system-right{
+  width: calc(100% - 120px);
+  min-width: 500px;
+  float: right;
+  min-height: 100%;
+  box-sizing: border-box;
+  padding:0px;
+  margin:0px;
+}
+.right-main-box{
+  padding:15px;
+  width:100%;
+  box-sizing: border-box;
+}
+.right-main{
+  width:100%;
+  box-sizing: border-box;
+  padding:20px;
+  background: #fff;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+}
+.left-Line{
+  height: 24px;
+  line-height: 24px;
+  padding-left: 5px;
+  border-left: 2px solid #409eff;
+  margin-bottom: 20px;
+  font: 14px Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;
+  color: #303133;
+}
+.kaifang-weixin{
+  width:200px;
+  line-height: 24px;
+  color: #303133;
+  font: 14px Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;
+}
+.clickspan{
+  display:inline-block;
+  margin-left:20px;
+  cursor:pointer;
+  color: #999
+}
+.clickspan:hover{
+  color: #409EFF;
 }
 
-.blue {
-  color: #2cc23c !important;
-}
-.fuCeng {
-  position: fixed;
-
-  z-index: 1002;
-  margin-left: 5%;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  > div {
-    width: 70%;
-    height: 480px;
-    background: white;
-    // overflow-x: hidden;
-    // overflow-y: scroll;
-    h4 {
-      display: flex;
-      justify-content: space-between;
-      padding: 20px;
-      margin: 0;
-      background: #4986ff;
-      color: white;
-      font-weight: 100;
-      img {
-        width: 15px;
-        height: 15px;
-      }
-    }
-    div {
-      margin-top: 10px;
-      p {
-        font-size: 15px;
-        text-align: center;
-        span {
-          margin: 20px;
-          padding: 7px 20px;
-          font-size: 12px;
-          border: 1px solid gainsboro;
-          margin: 0 40px;
-        }
-        span:nth-of-type(1) {
-          background: #4986ff;
-          color: white;
-        }
-        span:nth-of-type(2) {
-          background: #fff;
-          color: #c2c2c2;
-        }
-      }
-      p:nth-of-type(3) {
-        margin-top: 60px;
-      }
-    }
+</style>
+<style>
+  /* 站点 */
+  .right-main1 .el-form-item__label{
+    width:160px !important;
+    font-size: 14px;
+    color: #606266;
+    font-weight: 400;
   }
+  .right-main1 .el-form-item__label::before{
+    content: '*';
+    color: #ff4949;
+    margin-right: 4px;
+  }
+  .right-main1 .el-input{
+    width:200px;
+  }
+  .right-main1 .el-form-item__content{
+    margin-left: 160px;
+  }
+    .right-main1 .el-form-item__content .el-button{
+    margin-left: 80px;
+  }
+  .right-main1 .el-form-item__content>div{
+
+  }
+    /* 上传照片 */
+  .right-main1 .avatar-uploader {
+    display: inline-block;
+    width: 262px;
+    /* border: 1px dashed #d9d9d9; */
+    cursor: pointer;
+    position: relative;
+    /* overflow: hidden; */
+    min-width: 64px;
+    max-width: 260px;
+    overflow: hidden;
+    height: 41px;
+    min-height: 64px;
+    cursor: pointer;
+    margin: 0px 10px 10px 0px;
+    /* border: 1px dashed rgb(204, 204, 204); */
+    border-radius: 10px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+  }
+  .upload-box1,.upload-box2,.upload-box3{
+    height:64px;
+  }
+  .right-main1 .upload-box1 .avatar-uploader .el-upload,.right-main1 .upload-box2 .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    width: 64px;
+    max-width: 260px;
+    overflow: hidden;
+    height:64px;
+    /* height: 64px; */
+    cursor: pointer;
+    margin: 0px 10px 10px 0px;
+    border: 1px dashed rgb(204, 204, 204);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .right-main1 .upload-box3 .avatar-uploader .el-upload{
+    border: 1px dashed #d9d9d9;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    width: 64px;
+    height:64px;
+    cursor: pointer;
+    margin: 0px 10px 10px 0px;
+    border: 1px dashed rgb(204, 204, 204);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .right-main1 .avatar-uploader .el-upload:hover {
+    border-color: #409eff;
+  }
+  .right-main1 .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 100%;
+    height: 64px;
+    line-height: 64px;
+    text-align: center;
+    border: 1px solid gainsboro;
+
+  }
+  .right-main1 em {
+      font-size: 16px;
+    }
+  .right-main1 .avatar {
+    width: 160px;
+    height: 100px;
+    display: block;
+  }
+
+
+
+    /* 开放平台 和短信配置,图片存储配置，验证码配置 */
+  .right-main2 .el-form-item__label,.right-main3 .el-form-item__label,.right-main4 .el-form-item__label,.right-main5 .el-form-item__label{
+    width:200px !important;
+    font-size: 14px;
+    color: #606266;
+    font-weight: 400;
+  }
+  .right-main2 .el-form-item__label::before,.right-main3 .el-form-item__label::before,.right-main4 .el-form-item__label::before,.right-main5 .el-form-item__label::before{
+    content: '*';
+    color: #ff4949;
+    margin-right: 4px;
+  }
+  .right-main2 .el-input, .right-main3 .el-input,.right-main4 .el-input,.right-main5 .el-input{
+    width:410px;
+  }
+  .right-main2 .el-form-item__content,.right-main3 .el-form-item__content,.right-main4 .el-form-item__content,.right-main5 .el-form-item__content{
+    margin-left: 200px !important;
+  }
+  .right-main7 .el-form-item__label{
+    width:120px !important;
+    font-size: 14px;
+    color: #606266;
+    font-weight: 400;
+  }
+  .right-main7 .star .el-form-item__label::before{
+    content: '*';
+    color: #ff4949;
+    margin-right: 4px;
+  }
+  .right-main7 .el-checkbox {
+    padding: 9px 20px 9px 10px;
+    border-radius: 4px;
+    border: 1px solid #DCDFE6;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    line-height: normal;
+    height: 36px;
+    margin: 5px;
+  }
+  .right-main7 .el-checkbox.is-bordered.is-checked {
+    border-color: #409EFF;
+}
+.right-main7 .el-tag {
+  margin:5px;
+}
+/* .right-main7 .el-form-item__content  .el-tag:nth-of-type(1) {
+  margin-left:0px;
+} */
+.el-table tr{
+  background: rgb(248, 248, 248) !important;
+}
+.el-table th{
+  background: rgb(248, 248, 248) !important;
+}
+.el-dialog__wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 220px;
+  margin: 0;
+  z-index: 101 !important;
+}
+.el-drawer{
+  width: 100% !important;
+  height: auto !important;
+}
+.v-modal{
+  z-index: 100 !important;
 }
 </style>
