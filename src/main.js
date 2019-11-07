@@ -33,10 +33,15 @@ import VueAxios from 'vue-axios'
 import '@/icons' // icon
 import './router/index' // permission control
 import clipboard from 'clipboard';
+<<<<<<< HEAD
 import VueClipboard from 'vue-clipboard2'
 
 Vue.use(VueClipboard)
 VueClipboard.config.autoSetContainer = true ;
+=======
+
+
+>>>>>>> efa76d768408ab662d072f74de9952065da20929
 //注册到vue原型上
 Vue.prototype.clipboard = clipboard;
 
