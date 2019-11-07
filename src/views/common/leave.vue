@@ -8,6 +8,8 @@
           type="daterange"
           size="mini"
           range-separator="至"
+          format="yyyy-MM-dd"
+          value-format="yyyy-MM-dd"
           :start-placeholder="time"
           :end-placeholder="time"
         ></el-date-picker>
@@ -35,9 +37,14 @@
       >
         <el-table-column :cell-class-name="colorblueclass"  label="留言时间">
           <template slot-scope="scope">
-            {{scope.row.create_time|formatDate}}
+            {{scope.row.create_time|dateFormat}}
           </template>
         </el-table-column>
+        <!-- <el-table-column :cell-class-name="colorblueclass"  label="留言时间">
+          <template slot-scope="scope">
+            {{5000|toUSD}}
+          </template>
+        </el-table-column> -->
         <el-table-column prop="investor_name" label="投资人名称" width="150"></el-table-column>
         <el-table-column prop="content" label="留言内容"></el-table-column>
         <el-table-column prop="reply" label="回复内容"></el-table-column>
@@ -112,6 +119,8 @@ export default {
       list: [],
       time: "",
       times: "",
+      starDate:'',
+      endDate:'',
       FC: false,
       form: {
         reply: ""
@@ -125,22 +134,29 @@ export default {
   methods: {
     // 查询
     inquire() {
-      // console.log(this.merchant);
+      console.log(this.value6);
       var that = this;
-      for (let i = 0; i < this.list.length; i++) {
-        if (that.list[i].investor_name == that.merchant) {
-          console.log(that.merchant);
-        }
+      // for (let i = 0; i < this.list.length; i++) {
+      //   if (that.list[i].investor_name == that.merchant) {
+      //     console.log(that.merchant);
+      //   }
+      // }
+      if(this.value6==null){
+        this.starDate=''
+        this.endDate=''
+      }else{
+        this.starDate=this.value6[0]
+        this.endDate=this.value6[1]
       }
       this.refresh();
     },
     // 请求数据
     refresh() {
       console.log(1111);
-      messageAll(this.pageNo, this.pageSize).then(res => {
+      messageAll(this.pageNo, this.pageSize,this.starDate,this.endDate).then(res => {
         console.log(res);
-        this.list = eval(res.list);
-        this.total = res.total;
+        this.list = eval(res.data.list);
+        this.total = res.data.total;
         // alert(this.total)
       });
     },

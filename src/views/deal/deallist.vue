@@ -1,46 +1,127 @@
 <template>
   <div class="wscn-http404-container">
     <div class="papel-box">
+      <div class="card-box">
+        <div class="card-item">
+          <div class="item-box">
+            <div class="item-title">
+              <span class="span-title">流水笔数</span>
+              <el-tooltip class="item" effect="dark" content="所有订单状态下的流水笔数之和" placement="top-end"><span style="color:#fff">?</span></el-tooltip>
+            </div>
+            <div class="content-num" style="font-weight: bold; color: rgb(11, 178, 12); display: flex;">38笔</div>
+          </div>
+        </div>
+        <div class="card-item">
+          <div class="item-box">
+            <div class="item-title">
+              <span class="span-title">待支付订单金额</span>
+              <el-tooltip class="item" effect="dark" content="待支付订单状态下的金额之和" placement="top-end"><span style="color:#fff">?</span></el-tooltip>
+            </div>
+            <div class="content-num" style="font-weight: bold; color: rgb(12, 186, 223); display: flex;">￥156.11元</div>
+          </div>
+        </div>
+        <div class="card-item">
+          <div class="item-box">
+            <div class="item-title">
+              <span class="span-title">商家实收</span>
+              <el-tooltip class="item" effect="dark" content="订单状态为交易成功的订单金额之和" placement="top-end"><span style="color:#fff">?</span></el-tooltip>
+            </div>
+            <div class="content-num" style="font-weight: bold; color: rgb(217, 29, 31); display: flex;">￥132.12元</div>
+          </div>
+        </div>
+        <div class="card-item">
+          <div class="item-box">
+            <div class="item-title">
+              <span class="span-title">手续费</span>
+              <el-tooltip class="item" effect="dark" content="官方手续费(每笔)+服务商分润(每笔)=手续费(和)" placement="top-end"><span style="color:#fff">?</span></el-tooltip>
+            </div>
+            <div class="content-num" style="font-weight: bold; color: rgb(10, 106, 161); display: flex;">￥0.5元</div>
+          </div>
+        </div>
+        <div class="card-item">
+          <div class="item-box">
+            <div class="item-title">
+              <span class="span-title">商家净收入</span>
+              <el-tooltip class="item" effect="dark" content="商家实收-手续费=商家净收入" placement="top-end"><span style="color:#fff">?</span></el-tooltip>
+            </div>
+            <div class="content-num" style="font-weight: bold; color: rgb(10, 106, 161); display: flex;">￥126.6元</div>
+          </div>
+        </div>
+      </div>
       <div class="nav-a">
         <div class="block" style="width:100%;">
-          <span class="demonstration">交易时间：</span>
-          <el-date-picker v-model="value6" type="daterange" size="mini" range-separator="至" :start-placeholder="time" :end-placeholder="times"></el-date-picker>
-          <el-button class="demonstration" type="primary" style="margin-left:20px">今天</el-button>
-          <el-button class="demonstration" type="primary" style="margin-left:20px">近三天</el-button>
-          <el-button class="demonstration" type="primary" style="margin-left:20px">近一周</el-button>
-          <hr/>
-          <span class="demonstration" style="">角色选择：</span>
-          <el-select v-model="role1" multiple placeholder="请选择" style="width:220px;">
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-          </el-select>
-          <el-select v-model="role2" multiple placeholder="请选择" style="width:220px;">
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-          </el-select>
-          <el-select v-model="role3" multiple placeholder="请选择" style="width:220px;">
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-          </el-select>
-          <el-select v-model="role4" multiple placeholder="请选择" style="width:220px;">
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-            <el-option label="1" value="1"></el-option>
-          </el-select>
-          <span class="time" style="margin-left:20px" @click=" queryDate">查询</span>
-          <span class="time" style="background:#fff;border: 1px solid #DCDFE6;color: #606266;">清空</span>
-          <!-- <button @click="btt">点击</button> -->
+          <div class="query-item">
+            <span class="demonstration">交易时间：</span>
+            <el-date-picker v-model="value6" style="width:20%;" type="daterange" format="yyyy-MM-dd" value-format="yyyy-MM-dd" size="mini" range-separator="至" start-placeholder="开始时间" end-placeholder="结束时间"></el-date-picker>
+            <el-button class="demonstration" type="primary" style="margin-left:20px">今天</el-button>
+            <el-button class="demonstration" type="primary" style="margin-left:20px">近三天</el-button>
+            <el-button class="demonstration" type="primary" style="margin-left:20px">近一周</el-button>
+          </div>
+          <div class="query-item">
+            <span class="demonstration" style="">角色选择：</span>
+            <el-select v-model="role1" placeholder="请选择" style="width:220px;">
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+            </el-select>
+            <el-select v-model="role2" placeholder="请选择" style="width:220px;">
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+            </el-select>
+            <el-select v-model="role3" placeholder="请选择" style="width:220px;">
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+            </el-select>
+            <el-select v-model="role4" placeholder="请选择" style="width:220px;">
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+            </el-select>
+            <span class="time" style="margin-left:20px" @click="queryBtn">查询</span>
+            <span class="time" style="background:#fff;border: 1px solid #DCDFE6;color: #606266;">清空</span>
+          </div>
+          <div class="query-item">
+            <span class="demonstration" style="">支付方式：</span>
+            <el-select v-model="role1" placeholder="请选择" style="width:220px;">
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+            </el-select>
+            <el-select v-model="role2" placeholder="请选择" style="width:220px;">
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+            </el-select>
+            <el-select v-model="role3" placeholder="请选择" style="width:220px;">
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+            </el-select>
+            <el-select v-model="role4" placeholder="请选择" style="width:220px;">
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="1" value="1"></el-option>
+            </el-select>
+            <span class="time" style="margin-left:20px">导出</span>
+          </div>
         </div>
       </div>
       <div style="width:100%!important;" class="table-box">
@@ -108,6 +189,9 @@ export default {
 		 }
 	},
   methods: {
+    queryBtn(){
+      console.log(this.value6)
+    },
     // btt() {
     //   console.log(value6);
     // },
@@ -270,6 +354,57 @@ export default {
   background-color: #fff;
   box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
 }
+.query-item{
+  margin: 10px 0;
+}
+.card-box{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.card-item{
+  width: 20%;
+  height: 140px;
+  padding: 0 6px;
+  box-sizing: border-box;
+}
+.card-item .item-box{
+  width: 100%;
+  height: 134px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+  padding: 20px 20px 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.card-item .item-box .item-title{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.card-item .item-box .item-title .span-title{
+  // margin-bottom: 30px;
+  font-size: 20px;
+  white-space: nowrap;
+  flex-wrap: wrap;
+  color: rgb(143, 140, 141);
+}
+.card-item .item-box .item-title .item{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgb(217, 29, 31);
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  line-height: 10px;
+  cursor: pointer;
+}
+.card-item .item-box .content-num{
+  font-size: 20px;
+}
 </style>
 <style rel="stylesheet/scss" lang="scss" scoped>
 .wscn-http404-container {
@@ -310,7 +445,7 @@ export default {
   font-size: 12px;
   padding: 8px 20px;
   color: #f0f2f5;
-  margin: 0 20px;
+  // margin: 0 20px;
   border-radius: 3px;
   cursor: pointer
 }
@@ -325,4 +460,47 @@ export default {
   padding:8px 20px !important;
   box-sizing: border-box;
 }
+.el-range-editor--mini.el-input__inner{
+  width: 250px !important;
+  height: 40px !important;
+}
+.el-range-separator{
+  line-height: 32px !important;
+}
+.el-range-editor--mini.el-input__inner .el-range-input{
+  width: 90px !important;
+}
+</style>
+<style rel="stylesheet/scss" lang="scss" >
+  .box {
+    width: 400px;
+
+    .top {
+      text-align: center;
+    }
+
+    .left {
+      float: left;
+      width: 60px;
+    }
+
+    .right {
+      float: right;
+      width: 60px;
+    }
+
+    .bottom {
+      clear: both;
+      text-align: center;
+    }
+
+    .item {
+      margin: 4px;
+    }
+
+    .left .el-tooltip__popper,
+    .right .el-tooltip__popper {
+      padding: 8px 10px;
+    }
+  }
 </style>

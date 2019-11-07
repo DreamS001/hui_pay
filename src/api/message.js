@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 // 全部
-export function messageAll(pageNo,pageSize) {
+export function messageAll(pageNo,pageSize,starDate,endDate) {
   return request({
-    url: 'api/mix/message?pageNo='+pageNo+'&pageSize='+pageSize,
+    url: 'api/mix/message?pageNo='+pageNo+'&pageSize='+pageSize+'&starDate='+starDate+'&endDate='+endDate,
     method: 'get'
   })
 }

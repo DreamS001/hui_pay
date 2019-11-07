@@ -213,9 +213,9 @@ export default {
   },
   created() {
     mapp().then(res => {
-      var data=JSON.parse(res.data)
+      // var data=JSON.parse(res.data)
       // console.log(typeof(data.data.map_data))
-      this.navdata=eval(data.data)
+      // this.navdata=eval(data.data)
       // console.log(typeof(this.data))
       // console.log( this.dataa)
     })
