@@ -3,7 +3,7 @@
     <div class="papel-box">
       <div class="nav-a">
         <div class="block" style="width:100%;">
-		<el-input v-model="nickname" placeholder="昵称" clearable></el-input>
+		<el-input v-model="nickname" placeholder="昵称"></el-input>
           <div class="operation">
             <span class="time" style="margin-left:20px" @click="queryData">查询</span>
             <span class="time" style="background:#fff;border: 1px solid #DCDFE6;color: #606266;">清空</span>
@@ -109,9 +109,13 @@ export default {
 		var date = new Date()
 		this.startPlaceHoler = formatDate(date, 'yyyy-MM-dd')
 		this.endPlaceHoler = formatDate(date, 'yyyy-MM-dd')
-		this.beginDate = ''
-		this.endDate = ''
-		this.request()
+    // this.request()
+    users1Query(this.pageNumber, this.pageSize, this.nickname).then(res => {
+      this.allList = eval(res.data.list);
+      let data = this.allList;
+      this.list = data
+      this.total = res.data.pager.recordCount
+    });
 	}
 };
 </script>

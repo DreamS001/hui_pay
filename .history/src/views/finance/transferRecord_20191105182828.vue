@@ -3,7 +3,7 @@
     <div class="papel-box">
       <div class="nav-a">
         <div class="block" style="width:100%;">
-		<el-input v-model="nickname" placeholder="昵称" clearable></el-input>
+		<el-input v-model="nickname" placeholder="昵称"></el-input>
           <div class="operation">
             <span class="time" style="margin-left:20px" @click="queryData">查询</span>
             <span class="time" style="background:#fff;border: 1px solid #DCDFE6;color: #606266;">清空</span>
@@ -12,11 +12,11 @@
       </div>
       <div style="width:100%!important;" class="table-box">
         <el-table :data="list" style="width: 100%!important" stripe :header-cell-class-name="handlemyclass">
-          <el-table-column prop="id" label="标识" v-model="id"></el-table-column>
-          <el-table-column prop="nickname" label="昵称" v-model="nickname"></el-table-column>
-          <el-table-column prop="username" label="用户名" v-model="username"></el-table-column>
-          <el-table-column prop="phone" label="电话" v-model="phone"></el-table-column>
-          <el-table-column prop="password" label="密码" v-model="password"></el-table-column>
+          <el-table-column prop="标识" label="id" v-model="标识"></el-table-column>
+          <el-table-column prop="昵称" label="nickname" v-model="昵称"></el-table-column>
+          <el-table-column prop="用户名" label="username" v-model="用户名"></el-table-column>
+          <el-table-column prop="电话" label="phone" v-model="电话"></el-table-column>
+          <el-table-column prop="密码" label="password" v-model="密码"></el-table-column>
           <el-table-column prop="loc_info" label="操作"></el-table-column>
         </el-table>
       </div>
@@ -42,11 +42,11 @@ export default {
 			allList:[],
 			nickname:"",//昵称
 			nicknameValue:"",//昵称保存值，防止因叉号变成undefined
-			id:"",//标识
-			nickname:"",//昵称
-			username:"",//用户名
-			phone:"",//电话
-			password:"",//密码
+			标识:"",//id
+			昵称:"",//nickname
+			用户名:"",//username
+			电话:"",//phone
+			密码:"",//password
 			maxPageSize:2147483647
 		};
 	},
@@ -69,8 +69,8 @@ export default {
 				this.list = data
 				require.ensure([], () => {
 					const { export_json_to_excel } = require("@/utils/Export2Excel.js") //引入文件
-					const tHeader = ["标识","昵称","用户名","电话","密码"] //将对应的属性名转换成中文
-					const filterVal = ["id","nickname","username","phone","password"] //table表格中对应的属性名
+					const tHeader = ["id","nickname","username","phone","password"] //将对应的属性名转换成中文
+					const filterVal = ["标识","昵称","用户名","电话","密码"] //table表格中对应的属性名
 					const list = data //想要导出的数据
 					const data = this.formatJson(filterVal, list)
 					export_json_to_excel(tHeader, data, "设备交易记录excel")

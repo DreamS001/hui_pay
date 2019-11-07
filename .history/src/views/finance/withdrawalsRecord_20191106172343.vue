@@ -247,7 +247,7 @@
                             </div>
                             <div class="content_text">
                               <div class="layui-form-mid">支付宝授权状态：</div>
-                              <div class="layui-form-mid layui-word-aux">授权成功 <span style="color: red;" @click="reauthorization">点击重新扫码授权</span></div>
+                              <div class="layui-form-mid layui-word-aux">授权成功 <span style="color: red;">点击重新扫码授权</span></div>
                             </div>
                           </div>
                         </div>
@@ -403,8 +403,8 @@
                     </div>
                     <div>
                       <div class="layui-fluid" style="padding: 15px;">
-                        <form class="layui-form" action="" style="background-color:#fff;padding: 20px;" v-show="isform">
-                          <div class="layui-form-item" >
+                        <form class="layui-form" action="" style="background-color:#fff;padding: 20px;">
+                          <div class="layui-form-item" v-show="isformitem">
                             <label class="layui-form-label">{{labelname}}:</label>
                             <div class="layui-input-inline">
                               <input type="text" name="merchantnumber" required=""  lay-verify="required" :placeholder="inputPlaceholder" autocomplete="off" class="layui-input" value="1558990011" style="width:220px">
@@ -420,7 +420,6 @@
                             </div>
                           </div>
                         </form>
-
                       </div>
                     </div>
                   </div>
@@ -441,7 +440,7 @@ import {formatDate} from '../../utils/date.js'
 export default {
   data() {
     return {
-      isform:true,
+      isformitem:true,
       iszfbpid:false,
       inputPlaceholder:'',
       labelname:'',
@@ -500,7 +499,7 @@ export default {
       this.labelname='微信商户号'
       this.inputPlaceholder='微信商户号'
       this.iszfbpid=false
-      this.isform=true
+      this.isformitem=true
     },
     // 显示支付宝浮层
     zfbPopUp(){
@@ -511,19 +510,12 @@ export default {
       this.labelname='PID'
       this.inputPlaceholder='支付宝用户扫码授权之后的PID'
       this.iszfbpid=true
-      this.isform=true
+      this.isformitem=true
     },
     // 关闭隐藏浮层
     unpopUP(){
       this.ispopUp1=true;
       this.ispopUp2=true;
-    },
-    // 支付宝信息重新授权弹框
-    reauthorization(){
-      this.ispopUp1=false;
-      this.ispopUp2=false;
-      this.Fctitle='信息'
-      this.isform=false
     },
     handlemyclass: function(row, column, rowIndex, columnIndex) {
       return "test";

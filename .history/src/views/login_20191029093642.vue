@@ -146,7 +146,7 @@ export default {
     background-image:url(	https://docs-1255840532.cos.ap-shanghai.myqcloud.com/3968.jpg );
     background-size: cover;
   }
-  .login .title {
+  .title {
     margin: 0px auto 30px auto;
     text-align: center;
     color: #707070;

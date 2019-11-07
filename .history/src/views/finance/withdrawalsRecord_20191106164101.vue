@@ -247,7 +247,7 @@
                             </div>
                             <div class="content_text">
                               <div class="layui-form-mid">支付宝授权状态：</div>
-                              <div class="layui-form-mid layui-word-aux">授权成功 <span style="color: red;" @click="reauthorization">点击重新扫码授权</span></div>
+                              <div class="layui-form-mid layui-word-aux">授权成功 <span style="color: red;">点击重新扫码授权</span></div>
                             </div>
                           </div>
                         </div>
@@ -398,17 +398,16 @@
                 <div class="popUp" :class="{ispopUp1:ispopUp1}" style="width:100%;height:100%;background-color:#000;opacity:0.3"> </div>
                   <div class="pop-content" :class="{ispopUp2:ispopUp2}" style="width:40%;height:40%; background-color: #f2f2f2">
                     <div class="" style="background-color: #F8F8F8;height:40px;border-bottom: 1px solid #eee;border-radius: 2px 2px 0 0;">
-                      <span style="display:inline-block;font-size:14px;float:left;margin-left:15px;margin-top:10px;">{{Fctitle}}</span>
+                      <span style="display:inline-block;font-size:14px;float:left;margin-left:15px;margin-top:10px;">填写微信号</span>
                       <span style="display:inline-block;font-size:25px;float:right;margin-right:15px;margin-top:10px;" @click="unpopUP" class="el-icon-close"></span>
                     </div>
                     <div>
                       <div class="layui-fluid" style="padding: 15px;">
-                        <form class="layui-form" action="" style="background-color:#fff;padding: 20px;" v-show="isform">
-                          <div class="layui-form-item" >
-                            <label class="layui-form-label">{{labelname}}:</label>
+                        <form class="layui-form" action="" style="background-color:#fff;padding: 20px;">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">微信商户号:</label>
                             <div class="layui-input-inline">
-                              <input type="text" name="merchantnumber" required=""  lay-verify="required" :placeholder="inputPlaceholder" autocomplete="off" class="layui-input" value="1558990011" style="width:220px">
-                              <span style="color: #d91d1f " class="ass" v-show="iszfbpid">支付宝用户扫码授权之后的PID</span>
+                              <input type="text" name="merchantnumber" required="" lay-verify="required" placeholder="微信商户号" autocomplete="off" class="layui-input" value="1558990011" style="width:220px">
                               <input type="hidden" name="merrtid" v-show="false" value="4" style="width:220px">
                             </div>
                           </div>
@@ -420,7 +419,6 @@
                             </div>
                           </div>
                         </form>
-
                       </div>
                     </div>
                   </div>
@@ -441,11 +439,6 @@ import {formatDate} from '../../utils/date.js'
 export default {
   data() {
     return {
-      isform:true,
-      iszfbpid:false,
-      inputPlaceholder:'',
-      labelname:'',
-      Fctitle:'',
       Fc:'',
       ispopUp1:true,
       ispopUp2:true,
@@ -496,34 +489,17 @@ export default {
       this.Fc=1
       this.ispopUp1=false;
       this.ispopUp2=false;
-      this.Fctitle='填写微信号'
-      this.labelname='微信商户号'
-      this.inputPlaceholder='微信商户号'
-      this.iszfbpid=false
-      this.isform=true
     },
     // 显示支付宝浮层
     zfbPopUp(){
       this.Fu=2
       this.ispopUp1=false;
       this.ispopUp2=false;
-      this.Fctitle='填写PID'
-      this.labelname='PID'
-      this.inputPlaceholder='支付宝用户扫码授权之后的PID'
-      this.iszfbpid=true
-      this.isform=true
     },
     // 关闭隐藏浮层
     unpopUP(){
       this.ispopUp1=true;
       this.ispopUp2=true;
-    },
-    // 支付宝信息重新授权弹框
-    reauthorization(){
-      this.ispopUp1=false;
-      this.ispopUp2=false;
-      this.Fctitle='信息'
-      this.isform=false
     },
     handlemyclass: function(row, column, rowIndex, columnIndex) {
       return "test";
@@ -660,8 +636,8 @@ export default {
   .pop-content{
     position: fixed;
     top:200px;
-    left:30%;
-    z-index: 250;
+    left:35%;
+    z-index: 666;
   }
 
 // 弹框内容样式
@@ -675,7 +651,7 @@ export default {
     float: left;
     display: block;
     padding: 9px 15px;
-    width: 120px;
+    width: 80px;
     font-weight: 400;
     line-height: 20px;
     color:#666;
@@ -726,12 +702,9 @@ export default {
 hr {
   background-color: #e6e6e6;
     height: 1px;
-    margin: 20px 0;
+    margin: 10px 0;
     border: 0;
     clear: both;
-}
-.ass {
-    margin-right: 100px;
 }
 </style>
 <style>

@@ -213,7 +213,7 @@
                         <div class="content-d">
                           <div class="titles">
                             <h1 style="" class="title">联系信息</h1>
-                            <el-button type="primary" style="margin:0px 0px 10px 30px;" @click="zfbPopUp">审核信息修改</el-button>
+                            <el-button type="primary" style="margin:0px 0px 10px 30px;">审核信息修改</el-button>
                           </div>
                           <div class="content">
                             <div class="content_text">
@@ -247,7 +247,7 @@
                             </div>
                             <div class="content_text">
                               <div class="layui-form-mid">支付宝授权状态：</div>
-                              <div class="layui-form-mid layui-word-aux">授权成功 <span style="color: red;" @click="reauthorization">点击重新扫码授权</span></div>
+                              <div class="layui-form-mid layui-word-aux">授权成功 <span style="color: red;">点击重新扫码授权</span></div>
                             </div>
                           </div>
                         </div>
@@ -307,10 +307,14 @@
                       <div class="tabs-content">
                         <div class="content-d">
                           <div class="titles">
-                            <h1 style="" class="title">微信信息</h1>
-                            <el-button type="primary" style="margin:0px 0px 10px 30px;" @click="wxPopUp">审核信息修改</el-button>
+                            <h1 style="" class="title">账户信息</h1>
+                            <el-button type="primary" style="margin:0px 0px 10px 30px;">审核信息修改</el-button>
                           </div>
                           <div class="content">
+                            <div class="content_text">
+                              <div class="layui-form-mid">支付宝账户信息：</div>
+                              <div class="layui-form-mid layui-word-aux">51465456@qq.com</div>
+                            </div>
                             <div class="content_text">
                               <div class="layui-form-mid">联系人姓名：</div>
                               <div class="layui-form-mid layui-word-aux">伊蕾</div>
@@ -326,45 +330,24 @@
                           </div>
                         </div>
                         <div class="content-d">
-                          <h1 style="color: rgb(17, 17, 17); margin: 10px 0px 14px;" class="title">经营信息</h1>
+                          <h1 style="color: rgb(17, 17, 17); margin: 10px 0px 14px;" class="title">支付宝信息</h1>
                           <div class="content">
                             <div class="content_text">
-                              <div class="layui-form-mid">商户简称：</div>
-                              <div class="layui-form-mid layui-word-aux">小易2</div>
+                              <div class="layui-form-mid"><div class="zfb">支</div>支付宝费率：</div>
+                              <div class="layui-form-mid layui-word-aux">0.38%</div>
                             </div>
                             <div class="content_text">
                               <div class="layui-form-mid">经营类目：</div>
                               <div class="layui-form-mid layui-word-aux">生活服务</div>
                             </div>
                             <div class="content_text">
-                              <div class="layui-form-mid">客服电话：</div>
-                              <div class="layui-form-mid layui-word-aux">13500000000</div>
-                            </div>
-                            <div class="content_text">
-                              <div class="layui-form-mid"><div class="zfb">微</div>微信申请费率：</div>
-                              <div class="layui-form-mid layui-word-aux">0.38%</div>
+                              <div class="layui-form-mid">支付宝授权状态：</div>
+                              <div class="layui-form-mid layui-word-aux">授权成功 <span style="color: red;">点击重新扫码授权</span></div>
                             </div>
                           </div>
                         </div>
                         <div class="content-d">
-                          <h1 style="color: rgb(17, 17, 17); margin: 10px 0px 14px;" class="title">商家结算卡信息</h1>
-                          <div class="content">
-                            <div class="content_text">
-                              <div class="layui-form-mid">持卡人：</div>
-                              <div class="layui-form-mid layui-word-aux">伊蕾</div>
-                            </div>
-                            <div class="content_text">
-                              <div class="layui-form-mid">提现银行：</div>
-                              <div class="layui-form-mid layui-word-aux">中国工商银行</div>
-                            </div>
-                            <div class="content_text">
-                              <div class="layui-form-mid">银行卡号：</div>
-                              <div class="layui-form-mid layui-word-aux">6212261202047932133</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="content-d">
-                          <h1 style="" class="title">商户信息/企业法人信息</h1>
+                          <h1 style="" class="title">营业执照/授权函</h1>
                           <div class="content">
                             <div class="certificate_content">
                               <div class="content_text">
@@ -374,13 +357,38 @@
                                 </div>
                               </div>
                               <div class="content_text">
-                                <div class="layui-form-mid">身份证正面</div>
+                                <div class="layui-form-mid">支付宝授权函</div>
+                                <div class="layui-form-mid layui-word-aux">
+                                  <img style="width: 80px; height: 60px;" src="http://fp.jie360.com.cn/uploads/2/1/image/20190929181416fb0c82957.jpg" alt="">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="content-d">
+                          <h1 style="" class="title">门店照片信息</h1>
+                          <div class="content">
+                            <div class="certificate_content">
+                              <div class="content_text">
+                                <div class="layui-form-mid">店铺门头照片</div>
                                 <div class="layui-form-mid layui-word-aux">
                                   <img style="width: 80px; height: 60px;" src="http://fp.jie360.com.cn/uploads/2/1/image/20190929181416fb0c82957.jpg" alt="">
                                 </div>
                               </div>
                               <div class="content_text">
-                                <div class="layui-form-mid">身份证反面</div>
+                                <div class="layui-form-mid">内景照片</div>
+                                <div class="layui-form-mid layui-word-aux">
+                                  <img style="width: 80px; height: 60px;" src="http://fp.jie360.com.cn/uploads/2/1/image/20190929181416fb0c82957.jpg" alt="">
+                                </div>
+                              </div>
+                              <div class="content_text">
+                                <div class="layui-form-mid">内景照片2</div>
+                                <div class="layui-form-mid layui-word-aux">
+                                  <img style="width: 80px; height: 60px;" src="http://fp.jie360.com.cn/uploads/2/1/image/20190929181416fb0c82957.jpg" alt="">
+                                </div>
+                              </div>
+                              <div class="content_text">
+                                <div class="layui-form-mid">内景照片3</div>
                                 <div class="layui-form-mid layui-word-aux">
                                   <img style="width: 80px; height: 60px;" src="http://fp.jie360.com.cn/uploads/2/1/image/20190929181416fb0c82957.jpg" alt="">
                                 </div>
@@ -393,37 +401,6 @@
                     </el-tab-pane>
                   </el-tabs>
                 </template>
-
-                <!-- 弹层 -->
-                <div class="popUp" :class="{ispopUp1:ispopUp1}" style="width:100%;height:100%;background-color:#000;opacity:0.3"> </div>
-                  <div class="pop-content" :class="{ispopUp2:ispopUp2}" style="width:40%;height:40%; background-color: #f2f2f2">
-                    <div class="" style="background-color: #F8F8F8;height:40px;border-bottom: 1px solid #eee;border-radius: 2px 2px 0 0;">
-                      <span style="display:inline-block;font-size:14px;float:left;margin-left:15px;margin-top:10px;">{{Fctitle}}</span>
-                      <span style="display:inline-block;font-size:25px;float:right;margin-right:15px;margin-top:10px;" @click="unpopUP" class="el-icon-close"></span>
-                    </div>
-                    <div>
-                      <div class="layui-fluid" style="padding: 15px;">
-                        <form class="layui-form" action="" style="background-color:#fff;padding: 20px;" v-show="isform">
-                          <div class="layui-form-item" >
-                            <label class="layui-form-label">{{labelname}}:</label>
-                            <div class="layui-input-inline">
-                              <input type="text" name="merchantnumber" required=""  lay-verify="required" :placeholder="inputPlaceholder" autocomplete="off" class="layui-input" value="1558990011" style="width:220px">
-                              <span style="color: #d91d1f " class="ass" v-show="iszfbpid">支付宝用户扫码授权之后的PID</span>
-                              <input type="hidden" name="merrtid" v-show="false" value="4" style="width:220px">
-                            </div>
-                          </div>
-                          <hr>
-                          <div class="layui-form-item">
-                            <label class="layui-form-label"></label>
-                            <div class="layui-input-inline" style="width: auto">
-                              <button type="button" class="layui-btn" lay-submit="" lay-filter="formDemo2">确认提交</button>
-                            </div>
-                          </div>
-                        </form>
-
-                      </div>
-                    </div>
-                  </div>
               </div>
             </div>
           </div>
@@ -441,14 +418,6 @@ import {formatDate} from '../../utils/date.js'
 export default {
   data() {
     return {
-      isform:true,
-      iszfbpid:false,
-      inputPlaceholder:'',
-      labelname:'',
-      Fctitle:'',
-      Fc:'',
-      ispopUp1:true,
-      ispopUp2:true,
       isshow:true,
       input:'',
       value: "",
@@ -491,40 +460,6 @@ export default {
 
   },
   methods:{
-    // 显示微信浮层
-    wxPopUp(){
-      this.Fc=1
-      this.ispopUp1=false;
-      this.ispopUp2=false;
-      this.Fctitle='填写微信号'
-      this.labelname='微信商户号'
-      this.inputPlaceholder='微信商户号'
-      this.iszfbpid=false
-      this.isform=true
-    },
-    // 显示支付宝浮层
-    zfbPopUp(){
-      this.Fu=2
-      this.ispopUp1=false;
-      this.ispopUp2=false;
-      this.Fctitle='填写PID'
-      this.labelname='PID'
-      this.inputPlaceholder='支付宝用户扫码授权之后的PID'
-      this.iszfbpid=true
-      this.isform=true
-    },
-    // 关闭隐藏浮层
-    unpopUP(){
-      this.ispopUp1=true;
-      this.ispopUp2=true;
-    },
-    // 支付宝信息重新授权弹框
-    reauthorization(){
-      this.ispopUp1=false;
-      this.ispopUp2=false;
-      this.Fctitle='信息'
-      this.isform=false
-    },
     handlemyclass: function(row, column, rowIndex, columnIndex) {
       return "test";
     },
@@ -578,6 +513,69 @@ export default {
 }
 .block{
   width: 100%;
+}
+
+</style>
+<style>
+.block-d1 .item {
+  margin-top: 10px;
+  margin-right: 40px;
+}
+  .block-d .el-range-editor--mini.el-input__inner{
+    height:30px;
+  }
+  .block-d .el-range-editor.el-input__inner{
+    padding:0 10px;
+  }
+  .block-d .el-range-separator{
+    padding:5px;
+  }
+ .roles  .el-input__inner{
+   height:30px;
+   /* width:150px !important; */
+  }
+  .roles .el-input{
+    width:200px !important;
+  }
+ .roles .el-input__icon{
+   line-height: 30px;
+  }
+  .roles .el-button--primary{
+    height: 30px;
+    padding:7px 15px;
+  }
+  .roles .el-button--primary.is-plain{
+    color:black;
+    background-color: #fff;
+    border-color: #DCDFE6;
+  }
+  .roles .button2:hover{
+    color: #409EFF;
+    border-color: #c6e2ff;
+    background-color: #ecf5ff;
+  }
+  .zlist .el-table thead{
+    color: #909399;
+    font-weight: 500;
+  }
+  .zlist .test {
+  color: #909399 !important;
+  background: rgb(248, 248, 248) !important;
+  font-weight: 100;
+  width: 100% !important;
+  font-weight: 500;
+}
+
+  .zlist .s-btn{
+    color:#66b1ff
+  }
+
+/* 详情样式 */
+  .tabs-content .el-collapse-item__content {
+    padding-bottom: 25px;
+    font-size: 13px;
+    color: #303133;
+    line-height: 1.769230769230769;
 }
   .tabs-content .content {
     padding: 20px 40px;
@@ -641,159 +639,4 @@ export default {
     background-color: #1296db;
     color: white;
   }
-  .ispopUp1{
-    display: none;
-
-  }
-  .ispopUp2{
-    display: none;
-
-
-  }
-  .popUp{
-    z-index: 200;
-    position: fixed;
-    top:0px;
-    left:0px;
-    /* z-index: 1000; */
-  }
-  .pop-content{
-    position: fixed;
-    top:200px;
-    left:30%;
-    z-index: 250;
-  }
-
-// 弹框内容样式
-.layui-form-item {
-    margin-bottom: 15px;
-    clear: both;
-    height:38px;
-    font-size: 14px;
-}
-.layui-form-label {
-    float: left;
-    display: block;
-    padding: 9px 15px;
-    width: 120px;
-    font-weight: 400;
-    line-height: 20px;
-    color:#666;
-    text-align: right;
-}
-.layui-form-item .layui-input-inline {
-    float: left;
-    width: 190px;
-    margin-right: 10px;
-}
-.layui-input-inline {
-    display: inline-block;
-    vertical-align: middle;
-}
-.layui-btn {
-    margin-right: 10px;
-    margin-bottom: 10px;
-}
-.layui-btn {
-    display: inline-block;
-    height: 38px;
-    line-height: 38px;
-    padding: 0 18px;
-    background-color: #009688;
-    color: #fff;
-    white-space: nowrap;
-    text-align: center;
-    font-size: 14px;
-    border: none;
-    border-radius: 2px;
-    cursor: pointer;
-}
-.layui-input, .layui-textarea {
-    display: block;
-    width: 100%;
-    padding-left: 10px;
-    border-color: #e6e6e6;
-    box-sizing: border-box;
-}
-.layui-input, .layui-select, .layui-textarea {
-    height: 38px;
-    line-height: 1.3;
-    border-width: 1px;
-    border-style: solid;
-    background-color: #fff;
-    border-radius: 2px;
-}
-hr {
-  background-color: #e6e6e6;
-    height: 1px;
-    margin: 20px 0;
-    border: 0;
-    clear: both;
-}
-.ass {
-    margin-right: 100px;
-}
-</style>
-<style>
-.block-d1 .item {
-  margin-top: 10px;
-  margin-right: 40px;
-}
-  .block-d .el-range-editor--mini.el-input__inner{
-    height:30px;
-  }
-  .block-d .el-range-editor.el-input__inner{
-    padding:0 10px;
-  }
-  .block-d .el-range-separator{
-    padding:5px;
-  }
- .roles  .el-input__inner{
-   height:30px;
-   /* width:150px !important; */
-  }
-  .roles .el-input{
-    width:200px !important;
-  }
- .roles .el-input__icon{
-   line-height: 30px;
-  }
-  .roles .el-button--primary{
-    height: 30px;
-    padding:7px 15px;
-  }
-  .roles .el-button--primary.is-plain{
-    color:black;
-    background-color: #fff;
-    border-color: #DCDFE6;
-  }
-  .roles .button2:hover{
-    color: #409EFF;
-    border-color: #c6e2ff;
-    background-color: #ecf5ff;
-  }
-  .zlist .el-table thead{
-    color: #909399;
-    font-weight: 500;
-  }
-  .zlist .test {
-  color: #909399 !important;
-  background: rgb(248, 248, 248) !important;
-  font-weight: 100;
-  width: 100% !important;
-  font-weight: 500;
-}
-
-  .zlist .s-btn{
-    color:#66b1ff
-  }
-
-/* 详情样式 */
-  .tabs-content .el-collapse-item__content {
-    padding-bottom: 25px;
-    font-size: 13px;
-    color: #303133;
-    line-height: 1.769230769230769;
-}
-
 </style>
